@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>CV Interactif</title>
+
+<!-- STYLE -->
+<style>
+body {
+  font-family: Arial;
+  margin: 0;
+}
+
+header {
+  text-align: center;
+  background: #222;
+  color: white;
+  padding: 20px;
+}
+
+.profile {
+  width: 120px;
+  border-radius: 50%;
+}
+
+section {
+  padding: 20px;
+}
+
+.skill {
+  margin: 10px 0;
+}
+
+.bar {
+  height: 10px;
+  background: teal;
+  width: 0;
+}
+
+.accordion p {
+  display: none;
+}
+
+.card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+form input, form textarea {
+  display: block;
+  margin: 10px 0;
+  width: 100%;
+  padding: 8px;
+}
+</style>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- React -->
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+  <img src="photo.png" class="profile">
+  <h1>mohamed BAMOU</h1>
+  <p>Étudiant en Informatique</p>
+  <p>Email: m.bamou9382@uca.ac.ma| GitHub: mohamed bamou </p>
+</header>
+
+<!-- ABOUT -->
+<section>
+  <h2>À propos</h2>
+  <p>Étudiant passionné par le développement web, j'aime créer des applications modernes...</p>
+</section>
+
+<!-- SKILLS -->
+<section>
+  <h2>Compétences</h2>
+
+  <div class="skill">
+    HTML
+    <div class="bar" data-level="90"></div>
+  </div>
+
+   <div class="skill">
+    css
+    <div class="bar" data-level="85"></div>
+  </div>
+
+  <div class="skill">
+    JavaScript
+    <div class="bar" data-level="80"></div>
+  </div>
+
+  
+</section>
+
+<!-- FORMATION -->
+<section>
+  <h2>Formation</h2>
+
+  <div class="accordion">
+    <h3>2023 - bac science pc </h3>
+    <h3>2023-2024-  1er année MIP</h3>
+    <h3>2025-2026  deug info inchaalah  </h3>
+
+    <p>Université ...</p>
+  </div>
+
+</section>
+
+<!-- PROJECTS (React) -->
+<section>
+  <h2>Projets</h2>
+  <div id="root"></div>
+</section>
+
+<!-- CONTACT -->
+<section>
+  <h2>Contact</h2>
+
+  <form id="form">
+    <input type="text" id="name" placeholder="Nom">
+    <input type="email" id="email" placeholder="Email">
+    <textarea id="message" placeholder="Message"></textarea>
+    <button>Envoyer</button>
+  </form>
+
+</section>
+
+<!-- jQuery -->
+<script>
+$(document).ready(function () {
+
+  // animation skills
+  $('.bar').each(function () {
+    let level = $(this).data('level');
+    $(this).animate({ width: level + '%' }, 1000);
+  });
+
+  // accordion
+  $('.accordion h3').click(function () {
+    $(this).next().slideToggle();
+  });
+
+  // validation form
+  $('#form').submit(function (e) {
+    e.preventDefault();
+
+    let name = $('#name').val();
+    let email = $('#email').val();
+    let message = $('#message').val();
+
+    if (!name || !email || !message) {
+      alert('Champs vides ❌');
+      return;
+    }
+
+    if (!email.includes('@')) {
+      alert('Email invalide ❌');
+      return;
+    }
+
+    alert('Message envoyé ✅');
+  });
+
+});
+</script>
+
+<!-- React -->
+<script type="text/babel">
+
+const ProjectCard = ({title, desc, tech}) => {
+  return (
+    <div className="card">
+      <h3>{title}</h3>
+      <p>{desc}</p>
+      <p><b>{tech}</b></p>
+    </div>
+  );
+};
+
+const App = () => {
+  return (
+    <div>
+      <ProjectCard 
+        title="Projet 1"
+        desc="Site e-commerce"
+        tech="HTML CSS JS"
+      />
+      <ProjectCard 
+        title="Projet 2"
+        desc="App React"
+        tech="React"
+      />
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+</script>
+
+</body>
+</html>
